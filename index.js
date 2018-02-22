@@ -12,12 +12,12 @@ function map(input) {
             var p = element.phone.replace(/[^0-9\+]/ig,"")
             p = p.replace(/^00/, "")
             p = p.replace(/^\+/, "")
-            p = p.replace(/^0/, "49")
-            if (p != "")
+            p = "+"+p.replace(/^0/, "49")
+            if (p != "+")
             data.push({
                 "name": element.name,
                 "phoneNumbers": [{
-                    "label":"phone",
+                    "label":"",
                     "phoneNumber":p
                 }]
             })
