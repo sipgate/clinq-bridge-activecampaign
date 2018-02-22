@@ -1,0 +1,13 @@
+{
+  "name": "clinq-activecampaign",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "activecampaign": "^1.2.4",
+    "clinq-crm-bridge": "^1.0.6"
+  }
+}
