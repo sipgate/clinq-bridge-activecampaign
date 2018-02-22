@@ -16,10 +16,10 @@ function map(input) {
             if (p != "")
             data.push({
                 "name": element.name,
-                "phoneNumbers": {
+                "phoneNumbers": [{
                     "label":"phone",
                     "phoneNumber":p
-                }
+                }]
             })
         }
     })
