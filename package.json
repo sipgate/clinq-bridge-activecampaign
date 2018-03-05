@@ -8,6 +8,6 @@
   },
   "dependencies": {
     "activecampaign": "^1.2.4",
-    "clinq-crm-bridge": "^1.0.6"
+    "clinq-crm-bridge": "^3.0.5"
   }
 }

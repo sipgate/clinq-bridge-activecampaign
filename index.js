@@ -50,10 +50,10 @@ function fetchAllContacts() {
 }
 
 const adapter = {
-    getContacts: function(apikey) {
-        ac = new ActiveCampaign("https://sipgate.api-us1.com", apikey);
+    getContacts: function({apiKey, apiUrl}) {
+        ac = new ActiveCampaign(apiUrl, apiKey);
         return fetchAllContacts()
     }
 };
-    
+
 Clinq.start(adapter);
