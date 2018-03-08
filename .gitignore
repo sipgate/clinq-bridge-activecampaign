@@ -1,3 +1,4 @@
 node_modules
 .vscode
 .DS_*
+yarn-error.log
