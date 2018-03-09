@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "activecampaign": "^1.2.4",
-    "clinq-crm-bridge": "^3.2.0"
+    "clinq-crm-bridge": "^3.2.0",
+    "hubspot": "^1.2.3"
   },
   "engines": {
     "node": "^8 || ^9"
