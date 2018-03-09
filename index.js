@@ -1,5 +1,5 @@
 const Clinq = require("clinq-crm-bridge");
-const ClinqLoader = require("./clinq-loader");
+const ClinqLoader = require("./lib/clinq-loader");
 const ClinqAdapterActiveCampaign = require("./clinq-adapter-ac");
 const clinqLoader = new ClinqLoader(ClinqAdapterActiveCampaign)
 

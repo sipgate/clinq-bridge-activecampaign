@@ -1,4 +1,5 @@
 const ActiveCampaign = require('activecampaign')
+const ClinqPhonenumber = require('./lib/clinq-phonenumber')
 
 class ActiveCampaignAdapter {
     constructor(apiUrl, apiKey) {
@@ -33,11 +34,12 @@ class ActiveCampaignAdapter {
         Object.keys(input).forEach( key => {
             var element = input[key];
             if (typeof element.first_name !== "undefined" && element.phone!=="") {
+                var number = new ClinqPhonenumber(element.phone)
                 data.push({
                     "name": element.name,
                     "phoneNumbers": [{
                         "label":"",
-                        "phoneNumber":element.phone
+                        "phoneNumber":number.e123Number()
                     }]
                 })
             }
