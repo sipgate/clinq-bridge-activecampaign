@@ -1,11 +1,12 @@
-const Clinq = require("clinq-crm-bridge");
+const Clinq = require("@clinq/bridge");
 const ClinqLoader = require("./lib/clinq-loader");
 const ClinqAdapter = require("./lib/adapters/clinq-adapter-ac");
-const clinqLoader = new ClinqLoader(ClinqAdapter)
+const clinqLoader = new ClinqLoader(ClinqAdapter);
 
 const adapter = {
 	getContacts: async ({ apiKey, apiUrl }) => {
-        return clinqLoader.fetchContacts(apiKey, apiUrl)
+		const contacts = await clinqLoader.fetchContacts(apiKey, apiUrl);
+		return contacts;
 	}
 };
 

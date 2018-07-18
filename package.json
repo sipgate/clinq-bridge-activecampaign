@@ -1,16 +1,16 @@
 {
-  "name": "clinq-activecampaign",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "activecampaign": "^1.2.4",
-    "clinq-crm-bridge": "^3.2.0"
-  },
-  "engines": {
-    "node": "^8 || ^9"
-  }
+	"name": "clinq-activecampaign",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"activecampaign": "^1.2.4",
+		"@clinq/bridge": "^3.0.0"
+	},
+	"engines": {
+		"node": "^8 || ^9"
+	}
 }
