@@ -7,10 +7,7 @@
 		"start": "node index.js"
 	},
 	"dependencies": {
-		"activecampaign": "^1.2.4",
-		"@clinq/bridge": "^3.0.0"
-	},
-	"engines": {
-		"node": "^8 || ^9"
+		"activecampaign": "^1.2.5",
+		"@clinq/bridge": "^3.2.0"
 	}
 }

@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@clinq/bridge@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@clinq/bridge/-/bridge-3.0.0.tgz#4c4e9aedda7ed1ef9c9619402a204187c4c0df3c"
+"@clinq/bridge@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@clinq/bridge/-/bridge-3.2.0.tgz#3b5169a0f79c59c2d1cef19b4a49a0d903693aed"
   dependencies:
     ajv "^6.1.1"
     axios "^0.18.0"
@@ -19,9 +19,9 @@ accepts@~1.3.4:
     mime-types "~2.1.18"
     negotiator "0.6.1"
 
-activecampaign@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/activecampaign/-/activecampaign-1.2.4.tgz#0c99eb284b894a939b5eaac24fb65314f60f5933"
+activecampaign@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/activecampaign/-/activecampaign-1.2.5.tgz#1e9e2f4d109ef132167edb039273670f0f28322b"
   dependencies:
     request "2.x"
     rsvp "3.0.x"
