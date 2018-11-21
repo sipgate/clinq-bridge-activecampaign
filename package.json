@@ -1,6 +1,7 @@
 {
 	"name": "clinq-activecampaign",
 	"version": "1.0.0",
+	"private": true,
 	"main": "index.js",
 	"license": "MIT",
 	"scripts": {
@@ -8,6 +9,6 @@
 	},
 	"dependencies": {
 		"activecampaign": "^1.2.5",
-		"@clinq/bridge": "^5.0.0"
+		"@clinq/bridge": "^5.1.1"
 	}
 }
