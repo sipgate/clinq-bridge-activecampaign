@@ -7,6 +7,14 @@ const adapter = {
 	getContacts: async ({ apiKey, apiUrl }) => {
 		const contacts = await clinqLoader.fetchContacts(apiKey, apiUrl);
 		return contacts;
+	},
+	createContact: async ({ apiKey, apiUrl }, contact) => {
+		const returnedContact = await clinqLoader.createContact(
+			apiKey,
+			apiUrl,
+			contact
+		);
+		return returnedContact;
 	}
 };
 
