@@ -20,7 +20,7 @@ function createClient(apiKey, apiUrl) {
 function convertToClinqContact(contact) {
 	return {
 		id: contact.id,
-		company: contact.organization || null,
+		company: null,
 		email: contact.email || null,
 		name: null,
 		firstName: contact.firstName,
@@ -42,8 +42,7 @@ function convertToActiveCampaignContact(clinqContact) {
 			email: clinqContact.email,
 			firstName: clinqContact.firstName,
 			lastName: clinqContact.lastName,
-			phone: clinqContact.phoneNumbers[0].phoneNumber,
-			organization: clinqContact.company
+			phone: clinqContact.phoneNumbers[0].phoneNumber
 		}
 	};
 }
@@ -128,12 +127,9 @@ const adapter = {
 			throw new ServerError(401, "Unauthorized");
 		}
 
-		console.log(cache.size);
-
 		const contacts = cache.get(apiKey);
 
 		if (contacts) {
-			console.log(contacts);
 			return contacts;
 		}
 
