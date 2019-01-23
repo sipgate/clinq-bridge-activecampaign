@@ -5,10 +5,14 @@
 	"main": "index.js",
 	"license": "MIT",
 	"scripts": {
-		"start": "node index.js"
+		"start": "node index.js",
+		"watch": "nodemon index.js"
 	},
 	"dependencies": {
-		"activecampaign": "^1.2.5",
-		"@clinq/bridge": "^5.1.1"
+		"@clinq/bridge": "^5.1.1",
+		"axios": "^0.18.0"
+	},
+	"devDependencies": {
+		"nodemon": "^1.18.9"
 	}
 }
