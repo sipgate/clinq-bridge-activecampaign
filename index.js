@@ -58,7 +58,7 @@ async function populateCache(apiKey, client) {
 			client,
 			"organizations"
 		);
-		const contacts = await getAllActiveCampaignContacts(client);
+		const contacts = await getAllActiveCampaignEntities(client, "contacts");
 		const convertedContacts = contacts
 			.filter(contact => contact.phone)
 			.map(contact => convertToClinqContact(contact, organizations));
@@ -91,30 +91,6 @@ async function getAllActiveCampaignEntities(client, endpoint, entities = []) {
 		return merged;
 	}
 	return getAllActiveCampaignEntities(client, endpoint, merged);
-}
-
-async function getAllActiveCampaignContacts(client, contacts = []) {
-	let options = {
-		params: {
-			limit: 100
-		}
-	};
-	if (contacts.length > 0) {
-		options = {
-			params: {
-				offset: contacts.length,
-				limit: 100
-			}
-		};
-	}
-	const response = await client.get("/contacts", options);
-
-	const merged = [...contacts, ...response.data.contacts];
-
-	if (merged.length >= response.data.meta.total) {
-		return merged;
-	}
-	return getAllActiveCampaignContacts(client, merged);
 }
 
 async function createActiveCampaignContact(client, newContact) {
