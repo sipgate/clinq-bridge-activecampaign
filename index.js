@@ -17,10 +17,15 @@ function createClient(apiKey, apiUrl) {
 	});
 }
 
-function convertToClinqContact(contact) {
+function convertToClinqContact(contact, organizations) {
+	const organization = organizations.filter(
+		organization => organization.id === contact.orgid
+	);
+	const organizationName = organization[0] ? organization[0].name : null;
+
 	return {
 		id: contact.id,
-		company: null,
+		company: organizationName || null,
 		email: contact.email || null,
 		name: null,
 		firstName: contact.firstName,
@@ -49,15 +54,43 @@ function convertToActiveCampaignContact(clinqContact) {
 
 async function populateCache(apiKey, client) {
 	try {
+		const organizations = await getAllActiveCampaignEntities(
+			client,
+			"organizations"
+		);
 		const contacts = await getAllActiveCampaignContacts(client);
 		const convertedContacts = contacts
 			.filter(contact => contact.phone)
-			.map(contact => convertToClinqContact(contact));
+			.map(contact => convertToClinqContact(contact, organizations));
 
 		cache.set(apiKey, convertedContacts);
 	} catch (error) {
 		console.error(error.message);
 	}
+}
+
+async function getAllActiveCampaignEntities(client, endpoint, entities = []) {
+	let options = {
+		params: {
+			limit: 100
+		}
+	};
+	if (entities.length > 0) {
+		options = {
+			params: {
+				offset: entities.length,
+				limit: 100
+			}
+		};
+	}
+	const response = await client.get("/" + endpoint, options);
+
+	const merged = [...entities, ...response.data[endpoint]];
+
+	if (merged.length >= response.data.meta.total) {
+		return merged;
+	}
+	return getAllActiveCampaignEntities(client, endpoint, merged);
 }
 
 async function getAllActiveCampaignContacts(client, contacts = []) {
