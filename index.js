@@ -20,7 +20,7 @@ function createClient(apiKey, apiUrl) {
 function convertToClinqContact(contact, organizations) {
 	return {
 		id: contact.id,
-		organization: organizations ? getOrganizationById(contact.orgid) : null,
+		organization: organizations ? getOrganizationById(organizations, contact.orgid) : null,
 		email: contact.email || null,
 		name: null,
 		firstName: contact.firstName,
