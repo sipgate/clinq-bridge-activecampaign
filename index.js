@@ -18,14 +18,9 @@ function createClient(apiKey, apiUrl) {
 }
 
 function convertToClinqContact(contact, organizations) {
-	const organization = organizations.filter(
-		organization => organization.id === contact.orgid
-	);
-	const organizationName = organization[0] ? organization[0].name : null;
-
 	return {
 		id: contact.id,
-		company: organizationName || null,
+		organization: organizations ? getOrganizationById(contact.orgid) : null,
 		email: contact.email || null,
 		name: null,
 		firstName: contact.firstName,
@@ -39,6 +34,13 @@ function convertToClinqContact(contact, organizations) {
 			}
 		]
 	};
+}
+
+function getOrganizationById(organizations, id) {
+	const organization = organizations.filter(
+		organization => organization.id === id
+	);
+	return organization[0] ? organization[0].name : null;
 }
 
 function convertToActiveCampaignContact(clinqContact) {
