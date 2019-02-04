@@ -29,7 +29,7 @@ function convertToClinqContact(contact, organizations) {
 		avatarUrl: null,
 		phoneNumbers: [
 			{
-				label: null,
+				label: "HOME",
 				phoneNumber: contact.phone
 			}
 		]
