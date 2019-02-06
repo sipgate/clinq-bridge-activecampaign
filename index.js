@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { start, ServerError } = require("@clinq/bridge");
+const { start, ServerError, PhoneNumberLabel } = require("@clinq/bridge");
 
 const cache = new Map();
 
@@ -18,14 +18,17 @@ function createClient(apiKey, apiUrl) {
 }
 
 function convertToClinqContact(contact, organizations) {
-	const organization = organizations.filter(
-		organization => organization.id === contact.orgid
-	);
-	const organizationName = organization[0] ? organization[0].name : null;
+	let organization = [];
+	if (organizations) {
+		organization = organizations.filter(
+			organization => organization.id === contact.orgid
+		);
+	}
+	const organizationName = organization.length ? organization[0].name : null;
 
 	return {
 		id: contact.id,
-		company: organizationName || null,
+		organization: organizationName || null,
 		email: contact.email || null,
 		name: null,
 		firstName: contact.firstName,
@@ -34,7 +37,7 @@ function convertToClinqContact(contact, organizations) {
 		avatarUrl: null,
 		phoneNumbers: [
 			{
-				label: null,
+				label: PhoneNumberLabel.WORK,
 				phoneNumber: contact.phone
 			}
 		]
@@ -152,7 +155,12 @@ const adapter = {
 				newContact
 			);
 
-			return convertToClinqContact(activeCampaignContact);
+			const organizations = await getAllActiveCampaignEntities(
+				client,
+				"organizations"
+			);
+
+			return convertToClinqContact(activeCampaignContact, organizations);
 		} catch (error) {
 			console.error(
 				`Could not create contact for key "${anonymizeKey(apiKey)}: ${
@@ -171,7 +179,12 @@ const adapter = {
 				updatedContact
 			);
 
-			return convertToClinqContact(activeCampaignContact);
+			const organizations = await getAllActiveCampaignEntities(
+				client,
+				"organizations"
+			);
+
+			return convertToClinqContact(activeCampaignContact, organizations);
 		} catch (error) {
 			console.error(
 				`Could not update contact for key "${anonymizeKey(apiKey)}: ${
