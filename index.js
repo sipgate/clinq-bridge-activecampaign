@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { start, ServerError, PhoneNumberLabel } = require("@clinq/bridge");
+const { start, ServerError } = require("@clinq/bridge");
 
 const cache = new Map();
 
@@ -18,17 +18,11 @@ function createClient(apiKey, apiUrl) {
 }
 
 function convertToClinqContact(contact, organizations) {
-	let organization = [];
-	if (organizations) {
-		organization = organizations.filter(
-			organization => organization.id === contact.orgid
-		);
-	}
-	const organizationName = organization.length ? organization[0].name : null;
-
 	return {
 		id: contact.id,
-		organization: organizationName || null,
+		organization: organizations
+			? getOrganizationById(organizations, contact.orgid)
+			: null,
 		email: contact.email || null,
 		name: null,
 		firstName: contact.firstName,
@@ -37,11 +31,18 @@ function convertToClinqContact(contact, organizations) {
 		avatarUrl: null,
 		phoneNumbers: [
 			{
-				label: PhoneNumberLabel.WORK,
+				label: "WORK",
 				phoneNumber: contact.phone
 			}
 		]
 	};
+}
+
+function getOrganizationById(organizations, id) {
+	const organization = organizations.filter(
+		organization => organization.id === id
+	);
+	return organization[0] ? organization[0].name : null;
 }
 
 function convertToActiveCampaignContact(clinqContact) {
