@@ -1,8 +1,6 @@
 const axios = require("axios");
 const { start, ServerError } = require("@clinq/bridge");
 
-const cache = new Map();
-
 function anonymizeKey(apiKey) {
 	return "********" + apiKey.substr(apiKey.length - 5);
 }
@@ -54,23 +52,6 @@ function convertToActiveCampaignContact(clinqContact) {
 			phone: clinqContact.phoneNumbers[0].phoneNumber
 		}
 	};
-}
-
-async function populateCache(apiKey, client) {
-	try {
-		const organizations = await getAllActiveCampaignEntities(
-			client,
-			"organizations"
-		);
-		const contacts = await getAllActiveCampaignEntities(client, "contacts");
-		const convertedContacts = contacts
-			.filter(contact => contact.phone)
-			.map(contact => convertToClinqContact(contact, organizations));
-
-		cache.set(apiKey, convertedContacts);
-	} catch (error) {
-		console.error(error.message);
-	}
 }
 
 async function getAllActiveCampaignEntities(client, endpoint, entities = []) {
@@ -129,24 +110,31 @@ async function updateActiveCampaignContact(client, id, updatedContact) {
 
 const adapter = {
 	getContacts: async ({ apiKey, apiUrl }) => {
+		let client;
+
 		try {
-			const client = createClient(apiKey, apiUrl);
-			populateCache(apiKey, client);
+			client = createClient(apiKey, apiUrl);
 		} catch (error) {
 			console.error(
-				`Could not get contacts for key "${anonymizeKey(apiKey)}"`,
-				error.message
+			`Could not get contacts for key "${anonymizeKey(apiKey)}"`,
+						error.message
 			);
 			throw new ServerError(401, "Unauthorized");
 		}
 
-		const contacts = cache.get(apiKey);
-
-		if (contacts) {
-			return contacts;
+		try {
+			const organizations = await getAllActiveCampaignEntities(
+					client,
+					"organizations"
+			);
+			const contacts = await getAllActiveCampaignEntities(client, "contacts");
+			return contacts
+				.filter(contact => contact.phone)
+				.map(contact => convertToClinqContact(contact, organizations));
+		} catch (error) {
+			console.error(error.message);
+			return null;
 		}
-
-		return [];
 	},
 	createContact: async ({ apiKey, apiUrl }, newContact) => {
 		try {
