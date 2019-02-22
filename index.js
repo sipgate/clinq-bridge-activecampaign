@@ -57,14 +57,16 @@ function convertToActiveCampaignContact(clinqContact) {
 async function getAllActiveCampaignEntities(client, endpoint, entities = []) {
 	let options = {
 		params: {
-			limit: 100
+			limit: 100,
+			forceQuery: 1
 		}
 	};
 	if (entities.length > 0) {
 		options = {
 			params: {
 				offset: entities.length,
-				limit: 100
+				limit: 100,
+				forceQuery: 1
 			}
 		};
 	}
@@ -116,16 +118,16 @@ const adapter = {
 			client = createClient(apiKey, apiUrl);
 		} catch (error) {
 			console.error(
-			`Could not get contacts for key "${anonymizeKey(apiKey)}"`,
-						error.message
+				`Could not get contacts for key "${anonymizeKey(apiKey)}"`,
+				error.message
 			);
 			throw new ServerError(401, "Unauthorized");
 		}
 
 		try {
 			const organizations = await getAllActiveCampaignEntities(
-					client,
-					"organizations"
+				client,
+				"organizations"
 			);
 			const contacts = await getAllActiveCampaignEntities(client, "contacts");
 			return contacts
