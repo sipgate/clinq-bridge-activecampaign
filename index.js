@@ -16,6 +16,14 @@ function createClient(apiKey, apiUrl) {
 }
 
 function convertToClinqContact(contact, organizations) {
+	const phoneNumbers = contact.phone
+		? [
+				{
+					label: "WORK",
+					phoneNumber: contact.phone
+				}
+		  ]
+		: [];
 	return {
 		id: contact.id,
 		organization: organizations
@@ -27,12 +35,7 @@ function convertToClinqContact(contact, organizations) {
 		lastName: contact.lastName,
 		contactUrl: null,
 		avatarUrl: null,
-		phoneNumbers: [
-			{
-				label: "WORK",
-				phoneNumber: contact.phone
-			}
-		]
+		phoneNumbers
 	};
 }
 
@@ -130,9 +133,9 @@ const adapter = {
 				"organizations"
 			);
 			const contacts = await getAllActiveCampaignEntities(client, "contacts");
-			return contacts
-				.filter(contact => contact.phone)
-				.map(contact => convertToClinqContact(contact, organizations));
+			return contacts.map(contact =>
+				convertToClinqContact(contact, organizations)
+			);
 		} catch (error) {
 			console.error(error.message);
 			return null;
