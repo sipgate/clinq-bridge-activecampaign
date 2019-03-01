@@ -15,7 +15,8 @@ function createClient(apiKey, apiUrl) {
 	});
 }
 
-function convertToClinqContact(contact, organizations) {
+function convertToClinqContact(apiUrl, contact, organizations) {
+	const urlPrefix = apiUrl.replace("https://", "").split(".")[0];
 	const phoneNumbers = contact.phone
 		? [
 				{
@@ -33,7 +34,7 @@ function convertToClinqContact(contact, organizations) {
 		name: null,
 		firstName: contact.firstName,
 		lastName: contact.lastName,
-		contactUrl: null,
+		contactUrl: `https://${urlPrefix}.activehosted.com/app/contacts/${contact.id}`,
 		avatarUrl: null,
 		phoneNumbers
 	};
@@ -137,7 +138,7 @@ const adapter = {
 			);
 			const contacts = await getAllActiveCampaignEntities(client, "contacts");
 			return contacts.map(contact =>
-				convertToClinqContact(contact, organizations)
+				convertToClinqContact(apiUrl, contact, organizations)
 			);
 		} catch (error) {
 			console.error(error.message);
@@ -157,7 +158,7 @@ const adapter = {
 				"organizations"
 			);
 
-			return convertToClinqContact(activeCampaignContact, organizations);
+			return convertToClinqContact(apiUrl, activeCampaignContact, organizations);
 		} catch (error) {
 			console.error(
 				`Could not create contact for key "${anonymizeKey(apiKey)}: ${
@@ -181,7 +182,7 @@ const adapter = {
 				"organizations"
 			);
 
-			return convertToClinqContact(activeCampaignContact, organizations);
+			return convertToClinqContact(apiUrl, activeCampaignContact, organizations);
 		} catch (error) {
 			console.error(
 				`Could not update contact for key "${anonymizeKey(apiKey)}: ${
