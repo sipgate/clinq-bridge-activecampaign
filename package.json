@@ -9,7 +9,7 @@
 		"watch": "nodemon index.js"
 	},
 	"dependencies": {
-		"@clinq/bridge": "^10.0.3",
+		"@clinq/bridge": "^10.1.2",
 		"axios": "^0.18.0"
 	},
 	"devDependencies": {
