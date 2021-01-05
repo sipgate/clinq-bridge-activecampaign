@@ -10,7 +10,7 @@
 	},
 	"dependencies": {
 		"@clinq/bridge": "^10.1.2",
-		"axios": "^0.18.0"
+		"axios": "^0.21.1"
 	},
 	"devDependencies": {
 		"nodemon": "^1.18.10"
